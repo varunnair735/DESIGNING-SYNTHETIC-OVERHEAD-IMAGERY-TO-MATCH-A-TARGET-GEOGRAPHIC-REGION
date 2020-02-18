@@ -4,7 +4,7 @@ The synthetic data used to improve object detection in satellite imagery was gen
 
 <img src="./readmeFigures/Vienna_detection.png" alt="Vienna detection"
 	title="Vienna detection" width="300"  />
-	
+
 <img src="./readmeFigures/Austin_detection.png" alt="Austin detection"
 	title="Austin detection" width="300"  />
 
@@ -15,15 +15,15 @@ Below are prediction mask comparisons for before/after augmentation with the syn
 
 The overarching design and creation of the synthetic data took place in distinct stages that have different levels of human oversight and interaction. After the whole process, one should have a set of synthetic training images with labels for a particular ''target'' city. We created these changes incrementally.
 
-These include four individual changes made to a generic random synthetic city designed to approximate the ''target'' city more closely in one specific regard. These four changes are then all combined into a fifth version of the synthetic city. These changes are in the following categories:
+These include four individual changes made to a generic random synthetic city designed to approximate the ''target'' city more closely in one specific regard. These four changes are then all combined into a fifth version of the synthetic city. The 5 changes are:
 
-- Distribution of building shape and frequency
-- Specificity of textures
-- Lighting variation
-- Road network generation
-- Total changes
+1. Distribution of building shape and frequency
+2. Specificity of textures
+3. Lighting variation
+4. Road network generation
+5. Aggregate changes
 
-Below the specific files used to create each dataset are listed by specific change.
+The next section Below the specific files used to create each dataset are listed by specific change.
 
 ## Austin
 
