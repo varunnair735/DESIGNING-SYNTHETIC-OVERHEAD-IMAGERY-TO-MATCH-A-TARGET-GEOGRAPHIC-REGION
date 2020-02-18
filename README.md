@@ -6,7 +6,6 @@ The synthetic data used to improve object detection in satellite imagery was gen
 
 <img src="./readmeFigures/Vienna_detection.png" alt="Vienna detection"
 	title="Vienna detection" width="300"  />
-
 <img src="./readmeFigures/Austin_detection.png" alt="Austin detection"
 	title="Austin detection" width="300"  />
 
