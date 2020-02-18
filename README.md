@@ -38,11 +38,13 @@ These include four individual changes made to a generic random synthetic city de
 5. Aggregate changes
 
 The READMEs specific to Austin and Vienna, respectively, describe the changes in detail and how to replicate them.
-
 ___
 ## Usage considerations
 
 The incremental changes mentioned above can be used to optimize synthetic data to more closely resemble the aesthetic qualities of real satellite imagery, but they are not necessarily strict guidelines to follow when trying to make synthetic data look more realistic. There are other changes that can be implemented at any point during the generation and processing of synthetic data that can ultimately boost detection performance in the deep learning model, but using the exact same changes on another set of synthetic data that is meant to resemble different geographic region may not yield consistent results. Thus, when looking to implement incremental changes to the datasets, the main consideration should be how the change can make the synthetic data more visually comparable to the geographic region it is meant to resemble, rather than how much a change boosted object detection performance for another synthetic dataset.
+___
+## Citation
+All work done on this repo was done in preparation for/in conjunction with the work for the paper ("Designing Synthetic Overhead Imagery to Match a Target Geographic Region: Preliminary Results Training Deep Learning Models" by Varun Nair, Paul Rhee, Bohao Huang, Kyle Bradbury, and Jordan Malof) submitted to IEEE Conference on International Geoscience and Remote Sensing Society (IGARSS), 2020.
 ___
 ## Acknowledgements
 
