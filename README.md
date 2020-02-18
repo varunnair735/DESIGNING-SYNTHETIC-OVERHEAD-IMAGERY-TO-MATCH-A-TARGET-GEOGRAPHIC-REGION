@@ -25,7 +25,7 @@ This repository includes the following
 - The paper submitted for publication to IGARSS 2020
 ___
 
-## Synthetic Data Augmentations
+## Overview of Synthetic Data Augmentations
 
 The overarching design and creation of the synthetic data took place in distinct stages that have different levels of human oversight and interaction. After the whole process, one should have a set of synthetic training images with labels for a particular ''target'' city. We created these changes incrementally.
 
