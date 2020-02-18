@@ -3,9 +3,10 @@
 The synthetic data used to improve object detection in satellite imagery was generated in a software called CityEngine. This document walks through our process for designing synthetic data to match specific domains. Below are examples of image tiles and their corresponding labels used in training.
 
 <img src="./readmeFigures/Vienna_detection.png" alt="Vienna detection"
-	title="Vienna detection" width="500"  />
+	title="Vienna detection" width="300"  />
+	
 <img src="./readmeFigures/Austin_detection.png" alt="Austin detection"
-	title="Austin detection" width="500"  />
+	title="Austin detection" width="300"  />
 
 Below are prediction mask comparisons for before/after augmentation with the synthetic data. Black and white regions are true positives and true negatives respectively. Blue and red regions are false positives and false negatives respectively.
 
