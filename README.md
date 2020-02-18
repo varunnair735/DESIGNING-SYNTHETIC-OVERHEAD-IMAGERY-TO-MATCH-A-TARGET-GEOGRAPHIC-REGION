@@ -1,30 +1,30 @@
 # README for Synthetic City Generation and Labelling
 
-The synthetic data used to improve object detection in satellite imagery was generated in a software called CityEngine.
+The synthetic data used to improve object detection in satellite imagery was generated in a software called CityEngine. This document walks through our process for designing synthetic data to match specific domains. Below are examples of image tiles and their corresponding labels used in training.
 
 <img src="./readmeFigures/Vienna_detection.png" alt="Vienna detection"
 	title="Vienna detection" width="500"  />
 <img src="./readmeFigures/Austin_detection.png" alt="Austin detection"
 	title="Austin detection" width="500"  />
 
-Below are some prediction masks with misidentified regions highlighted.
+Below are prediction mask comparisons for before/after augmentation with the synthetic data. Black and white regions are true positives and true negatives respectively. Blue and red regions are false positives and false negatives respectively.
 
 <img src="./readmeFigures/Prediction Map.jpeg" alt="Austin detection"
 	title="Austin detection" width="500"  />
 
 The overarching design and creation of the synthetic data took place in distinct stages that have different levels of human oversight and interaction. After the whole process, one should have a set of synthetic training images with labels for a particular ''target'' city. We created these changes incrementally.
 
-These include four distinct changes made to a generic random synthetic city designed to approximate the ''target'' city more closely in one specific regard. These four changes are then all combined into a fifth version of the synthetic city. These changes are in the following categories:
+These include four individual changes made to a generic random synthetic city designed to approximate the ''target'' city more closely in one specific regard. These four changes are then all combined into a fifth version of the synthetic city. These changes are in the following categories:
 
-- Distribution of building shape
+- Distribution of building shape and frequency
 - Specificity of textures
 - Lighting variation
 - Road network generation
 - Total changes
 
-Below the specific files used to create each dataset are listed by filetype.
+Below the specific files used to create each dataset are listed by specific change.
 
-Austin
+## Austin
 
 ### Distribution of Building Shape
 
@@ -196,7 +196,7 @@ Austin
 
     dynamic_shoot_syn_1_colorful_city.py
 
-Vienna
+## Vienna
 
 ### Distribution of Building Shape
 
