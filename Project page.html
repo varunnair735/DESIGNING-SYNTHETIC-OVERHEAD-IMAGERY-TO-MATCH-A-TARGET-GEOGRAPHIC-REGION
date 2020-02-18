@@ -1,0 +1,148 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title>Designing Synthetic Overhead Imagery To Match A Target Geographic Region</title>
+  <script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  <style>
+    /* http://stackoverflow.com/questions/18325779/bootstrap-3-collapse-show-state-with-chevron-icon */
+    .panel-heading .accordion-toggle:before {
+      font-family: 'Glyphicons Halflings';
+      content: "\e114";
+      float: left;
+      color: grey;
+      padding-right: 6px;
+    }
+    .panel-heading .accordion-toggle.collapsed:before {
+      content: "\e080";
+    }
+    .image {
+      display:block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container">
+      <ul class="nav navbar-nav">
+        <li><a href="#introduction">Introduction</a></li>
+        <li><a href="#download">Download</a></li>
+        <li><a href="#results">Results</a></li>
+        <li><a href="#considerations">Usage Considerations</a></li>
+        <li><a href="#citation">Citation</a></li>
+        <li><a href="#acknowledgements">Acknowledgements</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+
+    <a name="introduction"></a>
+    <div class="page-header"><h1 id="pascal-context-dataset">Designing Synthetic Overhead Imagery To Match A Target Geographic Region</h1></div>
+    <p>The synthetic data used to improve object detection in satellite imagery was generated in a software called CityEngine. </p>
+    <p>Below are some example segmentations from the dataset.</p>
+    <div class="row">
+      <div class="col-md-12">
+        <span href="#">
+          <img src="Vienna_detection.png" class="image">
+        </span>
+      </div>
+      <div class="col-md-12">
+        <span href="#">
+          <img src="Austin_detection.png" class="image">
+        </span>
+      </div>
+    </div>
+    <p>Below are some prediction masks with misidentified regions highlighted</p>
+    <img src="Prediction Map.jpeg" class="image" style="height: 100%; width: 100%;">
+    <h3>Synthetic Data Modifications</h3>
+    <p>The overarching design and creation of the synthetic data took place in distinct stages that have different levels of human oversight and interaction. After the whole process, one should have a set of synthetic training images with labels for a particular ''target'' city. We created these changes incrementally.</p>
+    <p>These include four distinct changes made to a generic random synthetic city designed to approximate the ''target'' city more closely in one specific regard. These four changes are then all combined into a fifth version of the synthetic city. These changes are in the following categories:</p>
+    <ul>
+      <li>Distribution of building shape</li>
+      <li>Specificity of textures</li>
+      <li>Lighting variations</li>
+      <li>Road network generation</li>
+      <li>Total changes</li>
+    </ul>
+    <a name="download"></a>
+    <div class="page-header"><h2 id="download">Download</h2></div>
+    <div class="well row">
+      <div class="col-md-6">
+        <h3 id="training-and-validation-set">Synthetic Dataset Generation Files</h2>
+        <p>The files below are tar files and require extraction to obtain the scripts and files used to generate syntehtic data in CityEngine. <code>sVienna.tar.gz</code> includes files used to generate a synthetic city looking to resemble Vienna and <code>sAustin.tar.gz</code> includes files used to generate a synthetic city that resmebles Austin.</p>
+        <p><a class="btn btn-primary btn-lg" href="synth_Vienna.tar.gz">sVienna.tar.gz (15.3 MB)</a></p>
+        <p><a class="btn btn-primary btn-lg" href="synth_Austin.tar.gz">sAustin.tar.gz</a></p>
+      </div>
+      <div class="col-md-6">
+        <h3 id="testing-set">Included in this Directory</h2>
+        <ul>
+          <li>The synthetic city datasets designed for cities based on rooftop/facade textures, street layout, building shape, lighting intensity, and lighting angle</li>
+          <li>CityEngine's .cga rule files to generate the virtual worlds and their labels</li>
+          <li>The Python scripts used to 'photograph' the virtual worlds and generate image tiles</li>
+          <li>The texture banks used for the specific alterations done</li>
+          <li>The two .cej scene files for the specific datasets</li>
+        </ul>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-2"></div>
+      <div class="well col-md-8">
+        <h3>README</h3>
+        <p>The README below dives into the details of how exactly to use the files extracted from the tarballs. The procedure includes steps starting from how to first initialize a synthetic city in CityEngine to what rule files should be used to replicate the results in the paper or implement new changes. By following this, users will be able to produce synthetic imagery of designed synthetic cities, with corresponding labelled ground truth imagery. These steps can be used as a template for future explorations into changes that can significantly improve performance in deep learning models.</p>
+        <p><a class="btn btn-primary" href="README.md">README.md (20 KB)</a></p>
+      </div>
+      <div class="col-md-2"></div>
+    </div>
+    <p><a href="#"><span class="glyphicon glyphicon-arrow-up"></span> back to top</a></p>
+
+    <a name="results"></a>
+    <div class="page-header"><h2 id="statistics">Results</h2></div>
+    <p>After implementing incremental changes to synthetic Vienna to make it more closely resemble the actual aesthetic of Vienna, we were able to see a mix of modest improvements and losses in performance in building detection. The results are shown below.</p>
+    <img src="Vienna_results.png" class="image">
+    <p>While there isn't one specific change that leads to a considerable improvement in performance from the baseline, these experiments represent a first step toward developing methods for designing synthetic overhead imagery and understanding which factors are most important in doing so.</p>
+    <p><a href="#"><span class="glyphicon glyphicon-arrow-up"></span> back to top</a></p>
+
+    <a name="considerations"></a>
+    <div class="page-header"> <h2 id="usage-considerations">Usage Considerations</h2></div>
+    The incremental changes mentioned above can be used to optimize synthetic data to more closely resemble the aesthetic qualities of real satellite imagery, but they are not necessarily strict guidelines to follow when trying to make synthetic data look more realistic. There are other changes that can be implemented at any point during the generation and processing of synthetic data that can ultimately boost detection performance in the deep learning model, but using the exact same changes on another set of synthetic data that is meant to resemble different geographic region may not yield consistent results. Thus, when looking to implement incremental changes to the datasets, the main consideration should be how the change can make the synthetic data look more like the geographic region it is meant to resemble, rather than how much a change boosted object detection performance for another synthetic dataset.
+    <p><a href="#"><span class="glyphicon glyphicon-arrow-up"></span> back to top</a></p>
+
+    <a name="citation"></a>
+    <div class="page-header"><h2 id="citation">Citation</h2></div>
+    <ul class="list-group">
+      <li class="list-group-item">
+        <div class="media">
+          <a class="pull-left text-center" href="igarss2020_syntheticDomainMatching.pdf"><h2><span class="glyphicon glyphicon-file"></span></h2>PDF</a>
+          <div class="media-body">
+            <h3>"Designing Synthetic Overhead Imagery To Match A Target Geographic Region: Prelimnary Results Training Deep Learning Models"</h3>
+            <p>Varun Nair, Paul Rhee, Bohao Huang, Kyle Bradbury, and Jordan M. Malof</p>
+            <p>IGARSS, 2019</a>
+          </div>
+        </div>
+      </li>
+    </ul>
+    <p><a href="#"><span class="glyphicon glyphicon-arrow-up"></span> back to top</a></p>
+
+    <a name="acknowledgements"></a>
+    <div class="page-header"><h2 id="acknowledgements">Acknowledgements</h2></div>
+    <p>We want to thank the NVIDIA corporation for donating the graphics processing unit (GPU) for this work. Bohao Huang would like to thank the Energy Data Analytics Ph.D. Fellowship program from the Duke University Energy
+      Initiative funded by the Alfred P. Sloan Foundation for supporting his work.</p>
+    <p><a href="#"><span class="glyphicon glyphicon-arrow-up"></span> back to top</a></p>
+
+  </div>
+
+</body>
+
+</html>
