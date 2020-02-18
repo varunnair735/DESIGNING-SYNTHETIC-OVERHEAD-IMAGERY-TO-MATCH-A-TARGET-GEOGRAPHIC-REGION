@@ -1,0 +1,97 @@
+/**
+ * File:    Facade_Textures.cga
+ * Created: 31 May 2019 17:13:38 GMT
+ * Author:  paulrhee
+ */
+
+version "2019.0"
+
+######################################################
+# control attributes (set by user)
+#
+
+@Group("Facade Settings",1)
+@Order(1) @Description("If this attribute is not set (= Random), the rules randlomy select a texture available for the given height")
+@Range("Random","Agricultural","Assembly","Educational","Industry","Mercantile","Office","Other","Public","Residential","Service","Transport","Unknown","Utility")
+attr Usage				= "Random"
+@Order(2) @Range(3,400) @Description("This attribute should be driven by the master rule. It influences which texture it taken. Note that this value should be set PER building, and NOT PER facade. Means typically you want the same texture on a whole building")
+attr BuildingHeight 	= geometry.area/20
+@Order(3) @Range(2.7,5.5)
+attr UpperfloorHeight 	= 3.7
+@Order(4) @Range(3.1,7.5)
+attr GroundfloorHeight 	= 4.5
+@Order(5) @Range(2,10)
+attr TileWidth 			= 3.5
+
+@Group("Texture Selection",2) 
+@Order(1)
+attr UpperfloorsTexture = getUpperfloorsTexture
+@Order(2)
+attr GroundfloorTexture = getGroundfloorTexture
+
+
+# Constants
+const LibraryLocation	= "Facades/FacadeTextures"
+const NeighborLookup	= 20		# number of neighboring textures in the folder to look up to find a texture which fits well to the building height
+
+
+
+######################################################
+# functions (suited for external usage)
+#
+
+# attribute dependencies
+getGroundfloorTexture		= listRandom(fileSearch(LibraryLocation + "/Groundfloor/*.png"))
+getUpperfloorsTexture		= listRandom(fileSearch(LibraryLocation + "/Upperfloors/*.png"))
+
+# reading metadata from filename	
+_round1(val)				= case val>0.5: rint(val) else: 1
+_getNbrOfFloors(texture) 	= _round1(float(getRange(fileName(texture),"f","_t")))
+_getNbrOfTiles(texture) 	= _round1(float(getRange(fileName(texture),"_t","_")))
+
+# texturing calculations
+_randomOffsetU(tex) 		= rint(rand(0,_getNbrOfTiles(tex)-1)) / _getNbrOfTiles(tex)
+_calcMatchingTextureWidth(tex) = 
+	case scope.sx > 0.5*TileWidth	: scope.sx / _round1(scope.sx/TileWidth) * _getNbrOfTiles(tex)
+	else							: scope.sx * _getNbrOfTiles(tex) * 5
+_calcMatchingTextureHeight(tex,floorHeight) = 
+	case scope.sy > 0.75*floorHeight: scope.sy / _round1(scope.sy/floorHeight) * _getNbrOfFloors(tex)
+	else							: scope.sy * _getNbrOfFloors(tex) * 10
+
+########################################################################
+########################################################################
+###
+###   RULES
+###
+###
+
+@StartRule
+Generate -->
+	alignScopeToGeometry(zUp,any,world.lowest)
+	alignScopeToAxes(y)
+	FacadeElevationCheck
+
+FacadeElevationCheck -->
+	case scope.elevation-initialShape.origin.py > GroundfloorHeight*0.5:	# is face above ground?
+		UpperFloors
+	else:
+		split(y){ (GroundfloorHeight*_getNbrOfFloors(GroundfloorTexture)): GroundFloors | ~1: UpperFloors }
+
+GroundFloors -->
+	setupProjection(0, scope.xy, 
+					_calcMatchingTextureWidth(GroundfloorTexture), 
+					_calcMatchingTextureHeight(GroundfloorTexture,GroundfloorHeight))
+	projectUV(0)
+	offsetUV(0,_randomOffsetU(GroundfloorTexture), 0)
+	texture(GroundfloorTexture)
+
+UpperFloors -->
+	setupProjection(0, scope.xy, 
+					_calcMatchingTextureWidth(UpperfloorsTexture), 
+					_calcMatchingTextureHeight(UpperfloorsTexture,UpperfloorHeight),
+					0, scope.sy-_calcMatchingTextureHeight(UpperfloorsTexture,UpperfloorHeight))
+	projectUV(0)
+	translateUV(0,_randomOffsetU(UpperfloorsTexture), 0)
+	texture(UpperfloorsTexture)
+
+

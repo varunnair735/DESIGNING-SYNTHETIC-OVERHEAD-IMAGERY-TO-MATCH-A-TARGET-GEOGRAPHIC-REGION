@@ -1,5 +1,17 @@
 # README for Synthetic City Generation and Labelling
 
+The synthetic data used to improve object detection in satellite imagery was generated in a software called CityEngine.
+
+<img src="./readmeFigures/Vienna_detection.png" alt="Vienna detection"
+	title="Vienna detection" width="500"  />
+<img src="./readmeFigures/Austin_detection.png" alt="Austin detection"
+	title="Austin detection" width="500"  />
+
+Below are some prediction masks with misidentified regions highlighted.
+
+<img src="./readmeFigures/Prediction Map.jpeg" alt="Austin detection"
+	title="Austin detection" width="500"  />
+
 The overarching design and creation of the synthetic data took place in distinct stages that have different levels of human oversight and interaction. After the whole process, one should have a set of synthetic training images with labels for a particular ''target'' city. We created these changes incrementally.
 
 These include four distinct changes made to a generic random synthetic city designed to approximate the ''target'' city more closely in one specific regard. These four changes are then all combined into a fifth version of the synthetic city. These changes are in the following categories:
@@ -542,3 +554,11 @@ The preprocessing script
     pre_process_syn.py
 
 loads in pairs of images for the same spot in the city, one RGB and one GT. First, it makes sure that at least 90% of the RGB tile is city, i.e. it removes images that were taken at the edge of the scene and thus include pure white. For images that meet this threshold, it then turns the GT images taken in CityEngine (where buildings are black) and turns them into image labels (where buildings are pure white (255,255,255) and everything else is black (0,0,0)). It saves the new pairs of images and these are what can then be used for training.
+
+## Usage considerations
+
+The incremental changes mentioned above can be used to optimize synthetic data to more closely resemble the aesthetic qualities of real satellite imagery, but they are not necessarily strict guidelines to follow when trying to make synthetic data look more realistic. There are other changes that can be implemented at any point during the generation and processing of synthetic data that can ultimately boost detection performance in the deep learning model, but using the exact same changes on another set of synthetic data that is meant to resemble different geographic region may not yield consistent results. Thus, when looking to implement incremental changes to the datasets, the main consideration should be how the change can make the synthetic data look more like the geographic region it is meant to resemble, rather than how much a change boosted object detection performance for another synthetic dataset.
+
+## Acknowledgements
+
+We want to thank the NVIDIA corporation for donating the graphics processing unit (GPU) for this work. Bohao Huang would like to thank the Energy Data Analytics Ph.D. Fellowship program from the Duke University Energy Initiative funded by the Alfred P. Sloan Foundation for supporting his work.
